@@ -1,7 +1,6 @@
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
-// import java.lang.Math; import javax.swing.JFrame;
 
 public class Cell{
     //INSTANCE VARIABLES/CONSTANTS
@@ -36,10 +35,10 @@ public class Cell{
     public void setAlive(boolean A){
       this.alive = A;
       if (A){
-        this.visual.setBackground(new Color(0, 0, 0));
+        this.visual.setBackground(Color.BLACK);
       }
       else{
-        this.visual.setBackground(new Color(255, 255, 255));
+        this.visual.setBackground(Color.WHITE);
       }
     }
     public JPanel getVisual(){
