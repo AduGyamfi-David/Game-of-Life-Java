@@ -1,8 +1,7 @@
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import java.awt.Color;
-import java.lang.Math;
+// import java.lang.Math; import javax.swing.JFrame;
 
 public class Cell{
     //INSTANCE VARIABLES/CONSTANTS
@@ -15,7 +14,8 @@ public class Cell{
       this.alive = false;
       this.visual = new JPanel();
       this.visual.setBounds(0, 0, cellSize, cellSize);
-      this.visual.setBackground(Color.gray);
+      this.visual.setBackground(Color.WHITE);
+      AddABorder();
       // this.visual.setBackground(new Color((int)((Math.random()*254) + 1), (int)((Math.random()*254) + 1), (int)((Math.random()*254) + 1)));
     }
   

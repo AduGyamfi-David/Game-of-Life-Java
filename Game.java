@@ -1,32 +1,34 @@
 //IMPORTED CLASSES
 //Graphic Objects
-import javax.swing.JButton; import javax.swing.JFrame;
+/*import javax.swing.JButton;*/ import javax.swing.JFrame;
 import javax.swing.JPanel; import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 
 //Editing & Simple Objects
-import java.awt.event; import java.awt.Color;
+import java.awt.Color;
 import java.awt.Rectangle; import java.awt.Dimension;
-import java.awt.BorderLayout; import java.awt.LayoutManager;
+import java.awt.BorderLayout; /*import java.awt.LayoutManager;*/
 import java.awt.FlowLayout; import java.awt.GridLayout;
 
 //Language Classes
-import java.lang.Math;
+// import java.lang.Math;
 
 //Class for the actual main program
 public class Game{
 
   //CLASS CONSTANTS
   static final int cellSize = 20; //Width & Height 
-  static final int cellDim = 4; //Dimensions of Cell Array
+  static final int cellDim = 20; //Dimensions of Cell Array
   static final Rectangle fieldDim = new Rectangle(150, 75, 1050, 600); //field dimensions
   //MAIN SUB
   public static void main(String[] args){
 
     //OBJECT VARIABLES
     JFrame form = new JFrame("Game"); //The Windows Form containing everything
-    JPanel field = new JPanel(new FlowLayout()); 
-    JPanel labels = new JPanel(new GridLayout());
+    JPanel container = new JPanel(new FlowLayout());
+    JPanel field = new JPanel(new GridLayout(cellDim, cellDim)); 
+    JPanel labels = new JPanel(new GridLayout(3, 0));
+    JPanel controls = new JPanel(new GridLayout(4,0));
     Cell[][] organisms = new Cell[cellDim][cellDim];
     // JButton cmdStart, cmdNextGeneration;
     JLabel fieldLabels[] = new JLabel[3];
@@ -36,19 +38,19 @@ public class Game{
     //Setting up the field on the form
     SetField(field);
     AddOrganisms(field, organisms);
-    // form.getContentPane().add(field);
-
-    //Setting up text controls on form
+    //Setting up text & command controls on form
     SetLabelInfo(fieldLabels, labels);
-    form.getContentPane().add(labels);
-
+    //Adding panels of all objects to form
+    container.setBackground(Color.GRAY);
+    container.add(field); container.add(labels);
 
     // cmdStart = new JButton("START GAME");
     // // cmdStart.addActionListener(new ActionListener());
     // cmdStart.setBounds(700, 200, 60, 30);
 
-    // // field.add(cmdStart);
-    form.setBackground(Color.black);
+    form.setBackground(Color.BLUE);
+    form.getContentPane().add(container);
+    form.pack();
     form.setVisible(true);
   }
 
@@ -64,7 +66,8 @@ public class Game{
 
   public static void SetField(JPanel F){
     F.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    F.setPreferredSize(new Dimension(500, 500));
+    F.setMaximumSize(new Dimension(500, 500));
+    F.setLocation(0, 0);
     F.setVisible(true);
   }
 
@@ -80,7 +83,7 @@ public class Game{
     
     //Set up graphics of panel containing labels
     L.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    L.setBackground(Color.CYAN);
+    L.setBackground(Color.WHITE);
 
     // lbls[0].setText(Integer.toString(CountAliveCells(0)));
     lbls[0].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -116,20 +119,22 @@ public class Game{
     i = j = 0;
     for (i = 0; i < cellDim; i ++){
       for (j = 0; j < cellDim; j ++){
-        O[i][j] = new Cell(((cellSize * i)), ((cellSize * j)));
+        O[i][j] = new Cell();
         f.add(O[i][j].getVisual(), BorderLayout.WEST);
       }
     }
   }
 
-  public static int CheckAliveCells(int x, int y, Cells O){
+  public static int CheckAliveCells(int x, int y, Cell[][] O){
     int cellCount = 0;
+    int i, j;
+    i = j = 0;
     for (j = y - 1; j < y + 2; j++){
       for (i = x - 1; i < x + 2; i ++){
         if (i == x && j == y){
         }
         else{
-          if (O.getCell(x,y).getAlive){
+          if (O[i][j].getAlive()){
             cellCount += 1;
           }
         }
@@ -152,11 +157,6 @@ public class Game{
   }
 
 }
-
-public class Cells{
-
-}
-
 /*WHAT HAVE WE LEARNT
 - void function means a function that doesn't return anything
 (or returns a void), i.e., a subroutine!
@@ -164,4 +164,5 @@ public class Cells{
 - static variables belong to the class as a whole, not each instance of the class
 - multi-D arrays are just arrays within arrays
 - import javax.swing.*; - IMPORTS ALL CLASSES under package
+- if I wanna resize myself, I have to create a layout.
 */
