@@ -18,9 +18,9 @@ public class Game{
 
   //CLASS CONSTANTS
   static final int cellSize = 20; //Width & Height 
-  static final int cellDim = 20; //Dimensions of Cell Array
+  static final int cellDim = 50; //Dimensions of Cell Array
   static final Rectangle fieldDim = new Rectangle(150, 75, 1050, 600); //field dimensions
-  static final int liveCells = 15; //Number of live cells initialized
+  static final int liveCells = 50; //Number of live cells initialized
   //MAIN SUB
   public static void main(String[] args){
 
@@ -30,16 +30,15 @@ public class Game{
     JPanel field = new JPanel(new GridLayout(cellDim, cellDim)); 
     JPanel labels = new JPanel(new GridLayout(3, 0));
     JPanel commands = new JPanel(new GridLayout(4,0));
-    Cell[][] organisms = new Cell[cellDim][cellDim];
     JButton fieldButtons[] = new JButton[5];
     JLabel fieldLabels[] = new JLabel[3];
+    Cell[][] organisms = new Cell[cellDim][cellDim];
     int generation = 0;
-
-    SetForm(form); 
 
     //Setting up the field on the form
     SetField(field);
     AddOrganisms(field, organisms);
+
     //Setting up text & command controls on form
     SetLabelInfo(fieldLabels, labels); //LABELS
     SetButtonInfo(fieldButtons, commands); //BUTTONS
@@ -49,39 +48,49 @@ public class Game{
 
     fieldButtons[0].addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
-        // generation += 1;
         AddLiveOrganisms(organisms);
         fieldLabels[0].setText(Integer.toString(CountAliveCells(organisms)));
-        // fieldLabels[2].setText(Integer.toString(generation));
+        fieldLabels[1].setText("STARTED");
+        ChangeGeneration(fieldLabels[2], generation);
         fieldButtons[0].setEnabled(false);
       }
     });
 
     fieldButtons[1].addActionListener(new ActionListener(){
       public void actionPerformed(ActionEvent e){
-        DetermineEvolutionLoop(organisms);
+        // DetermineEvolutionLoop(organisms);
+        DetermineEvolutionRecursive(organisms, 0, 0);
+        ChangeGeneration(fieldLabels[2], generation);
         fieldLabels[0].setText(Integer.toString(CountAliveCells(organisms)));
       }
     });
 
-    // cmdStart = new JButton("START GAME");
-    // // cmdStart.addActionListener(new ActionListener());
-    // cmdStart.setBounds(700, 200, 60, 30);
+    fieldButtons[2].addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        fieldLabels[1].setText("STOPPED");
+        fieldButtons[1].setEnabled(false);
+      }
+    });
 
-    form.setBackground(Color.BLUE);
-    form.getContentPane().add(container);
-    form.pack();
-    form.setVisible(true);
+    SetForm(form, container); 
   }
 
   // public void actionPerformed(ActionEvent e, JLabel lblCC, Cell[][] O){
   //   lblCC.setText(Integer.toString(CountAliveCells(O)));
   // }
   
+  public static void ChangeGeneration(JLabel lbl, int G){
+    G += 1;
+    lbl.setText("Generation: " + Integer.toString(G));
+  }
+
   //Creates window for game
-  public static void SetForm(JFrame F){
+  public static void SetForm(JFrame F, JPanel C){
     F.setBounds(fieldDim);
     F.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    F.getContentPane().add(C);
+    F.pack();
+    F.setVisible(true);
   }
 
   public static void SetField(JPanel F){
@@ -102,22 +111,20 @@ public class Game{
     }
     
     //Set up graphics of panel containing labels
-    // L.setBorder(BorderFactory.createLineBorder(Color.BLACK));
     L.setBackground(Color.WHITE);
 
-    // lbls[0].setText(Integer.toString(CountAliveCells(0)));
+    //LABEL 1 - NUMBER OF ALIVE CELLS
     lbls[0].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    // lbls[0].setBounds(700, 50, 100, 50);
     L.add(lbls[0]);
 
+    //LABEL 2 = GAME STATUS
     lbls[1].setText("NOT STARTED");
     lbls[1].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    // lbls[1].setBounds(700, 150, 100, 50);
     L.add(lbls[1]);
 
+    //LABEL 3 - GENERATION NUMBER
     lbls[2].setText("GENERATION: " + Integer.toString(0));
     lbls[2].setBorder(BorderFactory.createLineBorder(Color.BLACK));
-    // lbls[2].setBounds(700, 250, 100, 50);
     L.add(lbls[2]);
 
 
@@ -184,7 +191,7 @@ public class Game{
       for (j = y - 1; j < y + 2; j ++){
         if (i == x && j == y){
         }
-        else if (i < 0 || j < 0 || i > 19 || j > 19){
+        else if (i < 0 || j < 0 || i > cellDim - 1 || j > cellDim - 1){
         }
         else{
           if (O[i][j].getAlive()){
@@ -244,11 +251,25 @@ public static void DetermineEvolutionLoop(Cell[][] O){
       O[i][j].setAlive(nextStage[i][j]);
     }
   }
-
 }
 
-public static void DetermineEvolutionRecursive(Cell[][] O){
+public static void DetermineEvolutionRecursive(Cell[][] O, int i, int j){
+  boolean future = false;
+  if (CheckAliveCells(i, j, O) < 2 || CheckAliveCells(i, j, O) > 3){
+  }
+  else{
+    future = true;
+  }
 
+  if (i == cellDim - 1 && j == cellDim - 1){
+  }
+  else if (j == cellDim - 1){
+      DetermineEvolutionRecursive(O, i + 1, 0);
+  }
+  else{
+  DetermineEvolutionRecursive(O, i, j + 1);
+  }
+  O[i][j].setAlive(future);
 }
 
 }

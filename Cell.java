@@ -14,7 +14,7 @@ public class Cell{
       this.visual = new JPanel();
       this.visual.setBounds(0, 0, cellSize, cellSize);
       this.visual.setBackground(Color.WHITE);
-      AddABorder();
+      // AddABorder();
       // this.visual.setBackground(new Color((int)((Math.random()*254) + 1), (int)((Math.random()*254) + 1), (int)((Math.random()*254) + 1)));
     }
   
@@ -33,13 +33,19 @@ public class Cell{
       return this.alive;
     }
     public void setAlive(boolean A){
-      this.alive = A;
-      if (A){
+      if (A && this.alive){
         this.visual.setBackground(Color.BLACK);
+      }
+      else if (A && !this.alive){
+        this.visual.setBackground(Color.GREEN);
+      }
+      else if (!A && this.alive){
+        this.visual.setBackground(Color.RED);
       }
       else{
         this.visual.setBackground(Color.WHITE);
       }
+      this.alive = A;
     }
     public JPanel getVisual(){
       return this.visual;
@@ -49,9 +55,6 @@ public class Cell{
     }
   
     //CLASS METHODS
-    public void setLocation(int x, int y){
-      visual.setBounds(x, y, 50, 50);
-    }
     public void AddABorder(){
       this.visual.setBorder(BorderFactory.createLineBorder(Color.BLACK)); 
     }
