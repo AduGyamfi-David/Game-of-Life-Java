@@ -1,10 +1,10 @@
 //IMPORTED CLASSES
-//Graphic Objects
+//Graphical Classes
 import javax.swing.JButton; import javax.swing.JFrame;
 import javax.swing.JPanel; import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 
-//Editing & Simple Objects
+//Editing & Simple Packages & Classes
 import java.awt.Color;
 import java.awt.Rectangle; import java.awt.Dimension;
 import java.awt.BorderLayout; import java.awt.event.*;
@@ -12,6 +12,10 @@ import java.awt.FlowLayout; import java.awt.GridLayout;
 
 //Language Classes
 import java.lang.Math;
+
+//I/O Classes
+import java.io.File; import java.io.IOException; 
+import java.io.FileWriter;
 
 //Class for the actual main program
 public class Game{
@@ -21,6 +25,7 @@ public class Game{
   static final int cellDim = 50; //Dimensions of Cell Array
   static final Rectangle fieldDim = new Rectangle(150, 75, 1050, 600); //field dimensions
   static final int liveCells = 50; //Number of live cells initialized
+  static final String dataPath = new String("C:\\Users\\David A\\Documents\\David\\Other\\Programming\\Program Data\\GoL");
   //MAIN SUB
   public static void main(String[] args){
 
@@ -72,13 +77,46 @@ public class Game{
       }
     });
 
+    fieldButtons[3].addActionListener(new ActionListener(){
+      public void actionPerformed(ActionEvent e){
+        WriteStateToFile(organisms);
+      }
+    });
+
     SetForm(form, container); 
   }
-
-  // public void actionPerformed(ActionEvent e, JLabel lblCC, Cell[][] O){
-  //   lblCC.setText(Integer.toString(CountAliveCells(O)));
-  // }
   
+  public static void WriteStateToFile(Cell[][] O){
+    File fieldFile = new File(dataPath + "field1.txt");
+    try{
+      if (fieldFile.createNewFile()){
+        System.out.println("FILE CREATED");
+      }
+    }
+    catch (IOException e) {
+      System.out.println("ERROR");
+    }
+    try{
+      FileWriter fieldWriter = new FileWriter(fieldFile);
+      int i = 0; int j = 0;
+      for (i = 0; i < cellDim; i ++){
+        for (j = 0; j < cellDim; j ++){
+          if (O[i][j].getAlive()){
+            fieldWriter.write("1");
+          }
+          else{
+            fieldWriter.write("0");
+          }
+        }
+      }
+      fieldWriter.close();
+      System.out.println("FILE WRITE SUCCESS");
+    }
+    catch (IOException e){
+      System.out.println("ERROR");
+    }
+  }
+
   public static void ChangeGeneration(JLabel lbl, int G){
     G += 1;
     lbl.setText("Generation: " + Integer.toString(G));
@@ -230,7 +268,7 @@ public class Game{
     }
   }
 
-public static void DetermineEvolutionLoop(Cell[][] O){
+  public static void DetermineEvolutionLoop(Cell[][] O){
 
   int i = 0; int j = 0;
   boolean[][] nextStage = new boolean[cellDim][cellDim];
@@ -253,7 +291,7 @@ public static void DetermineEvolutionLoop(Cell[][] O){
   }
 }
 
-public static void DetermineEvolutionRecursive(Cell[][] O, int i, int j){
+  public static void DetermineEvolutionRecursive(Cell[][] O, int i, int j){
   boolean future = false;
   if (CheckAliveCells(i, j, O) < 2 || CheckAliveCells(i, j, O) > 3){
   }
