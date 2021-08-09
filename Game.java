@@ -6,6 +6,10 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.BorderFactory;
 
+//JAVAFX PACKAGES
+// import javafx.application.*;
+
+
 //Editing & Simple Packages & Classes
 import java.awt.Color;
 import java.awt.Rectangle;
