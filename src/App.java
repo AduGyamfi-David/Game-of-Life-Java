@@ -17,7 +17,7 @@ import javafx.scene.*;
 
 //Editing & Simple Packages & Classes
 // import java.awt.Color;
-import java.awt.Rectangle;
+// import java.awt.Rectangle;
 // import java.awt.Dimension;
 // import java.awt.BorderLayout;
 // import java.awt.event.*;
@@ -34,14 +34,28 @@ import java.awt.Rectangle;
 
 public class App extends Application{
     // CLASS CONSTANTS
-	static final int cellSize = 20; // Width & Height
-	static final int cellDim = 50; // Dimensions of Cell Array
-	static final Rectangle fieldDim = new Rectangle(150, 75, 1050, 600); // field dimensions
-	static final int liveCells = 50; // Number of live cells initialized
-	static final String dataPath = new String("C:\\Users\\David A\\Documents\\David\\Other\\Programming\\Program Data\\GoL");
+	// static final int cellSize = 20; // Width & Height
+	// static final int cellDim = 50; // Dimensions of Cell Array
+	// static final Rectangle fieldDim = new Rectangle(150, 75, 1050, 600); // field dimensions
+	// static final int liveCells = 50; // Number of live cells initialized
+	// static final String dataPath = new String("C:\\Users\\David A\\Documents\\David\\Other\\Programming\\Program Data\\GoL");
 
     public static void main(String[] args) throws Exception {
-		launch(args);
+		// launch(args);
+	}
+
+	@Override
+    public void start(Stage arg0) throws Exception {
+        // // TODO Auto-generated method stub
+
+        Parent root = FXMLLoader.load(getClass().getResource("welcome.fxml"));
+
+        Scene scene = new Scene(root, 300, 300);
+        arg0.setTitle("Game Of Life");
+        arg0.setScene(scene);
+        arg0.show();
+    }
+}
 	// 	// OBJECT VARIABLES
 	// 	JFrame GameForm = new JFrame("Game"); // The Windows Form containing everything
 	// 	JFrame WelcomeForm = new JFrame("Welcome");
@@ -110,7 +124,7 @@ public class App extends Application{
 	// 		}
 	// 	});
 
-	}
+	// }
 
 	// private static void setWelcomeForm(JFrame W, JButton G) {
 	// 	W.setLayout(new BorderLayout());
@@ -343,19 +357,7 @@ public class App extends Application{
 	// 	O[i][j].setAlive(future);
 	// }
 
-    @Override
-    public void start(Stage arg0) throws Exception {
-        // TODO Auto-generated method stub
-
-        Parent root = FXMLLoader.load(getClass().getResource("welcome.fxml"));
-
-        Scene scene = new Scene(root, 300, 300);
-        arg0.setTitle("Game Of Life");
-        arg0.setScene(scene);
-        arg0.show();
-    }
-
-}
+// }
 /*
  * WHAT HAVE WE LEARNT - void function means a function that doesn't return
  * anything (or returns a void), i.e., a subroutine! - to initialize a variable:
