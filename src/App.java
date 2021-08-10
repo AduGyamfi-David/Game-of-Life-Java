@@ -1,4 +1,4 @@
-// package GAME_OF_LIFE_JAVA;
+// package src;
 
 //IMPORTED CLASSES
 //Graphical Classes
@@ -9,11 +9,13 @@
 // import javax.swing.BorderFactory;
 
 //JAVAFX PACKAGES
-import javafx.application.*;
-import javafx.stage.*;
-// import javafx.css.*;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 //Editing & Simple Packages & Classes
 // import java.awt.Color;
@@ -40,23 +42,31 @@ public class App extends Application{
 	// static final int liveCells = 50; // Number of live cells initialized
 	// static final String dataPath = new String("C:\\Users\\David A\\Documents\\David\\Other\\Programming\\Program Data\\GoL");
 
-    public static void main(String[] args) throws Exception {
-		// launch(args);
-	}
-
-	@Override
-    public void start(Stage arg0) throws Exception {
-        // // TODO Auto-generated method stub
-
-        Parent root = FXMLLoader.load(getClass().getResource("welcome.fxml"));
-
-        Scene scene = new Scene(root, 300, 300);
-        arg0.setTitle("Game Of Life");
-        arg0.setScene(scene);
-        arg0.show();
+	public static void main(String[] args) {
+        launch(args);
     }
-}
-	// 	// OBJECT VARIABLES
+    
+    @Override
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("Welcome to the Game of Life!");
+        Button btn = new Button();
+
+        btn.setText("Say 'Hello World'");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+ 
+    		@Override
+        	public void handle(ActionEvent event) {
+            	System.out.println("Hello World!");
+        	}
+    	});
+        
+    	StackPane root = new StackPane();
+    	root.getChildren().add(btn);
+    	primaryStage.setScene(new Scene(root, 600, 424));
+		primaryStage.getScene().getStylesheets().add(App.class.getResource("welcome.css").toExternalForm());
+    	primaryStage.show();
+    }
+}	// 	// OBJECT VARIABLES
 	// 	JFrame GameForm = new JFrame("Game"); // The Windows Form containing everything
 	// 	JFrame WelcomeForm = new JFrame("Welcome");
 	// 	JPanel container = new JPanel(new FlowLayout());
